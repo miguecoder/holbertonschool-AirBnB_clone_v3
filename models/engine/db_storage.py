@@ -65,10 +65,7 @@ class DBStorage:
             self.__session.delete(obj)
 
     def get(self, cls, id):
-        """A method to retrieve one object
-        Returns the object based on the class name and its ID, or
-        None if not found
-        """
+        """A method to retrieve one object """
         if type(cls) == str:
             cls = classes.get(cls)
         if cls is None:
@@ -76,10 +73,7 @@ class DBStorage:
         return self.__session.query(cls).filter(cls.id == id).first()
 
     def count(self, cls=None):
-        """A method to count the number of objects in storage
-        Returns the number of objects in storage matching the given class name
-        If no name is passed, returns the count of all objects in storage
-        """
+        """A method to count the number of objects in storage"""
         if type(cls) is str:
             cls = classes.get(cls)
         if cls is None:
