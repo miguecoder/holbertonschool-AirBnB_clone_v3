@@ -1,8 +1,7 @@
 #!/usr/bin/python3
-""" Amenity module """
-
+""" State module """
 from models import storage
-from api.v1.views import app_views, Amenity
+from api.v1.views import app_views, State, Amenity
 from flask import jsonify, request, abort, make_response
 
 
@@ -12,20 +11,20 @@ def get_amenities():
     return jsonify([v.to_dict() for v in storage.all(Amenity).values()])
 
 
-@app_views.route('/amenities/\
-    <amenity_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 methods=['GET'], strict_slashes=False)
 def get_amenity_by_id(amenity_id=None):
-    """ Return a amenity by id """
+    """ Return an amenity by id """
     amenity = storage.get(Amenity, amenity_id)
     if amenity:
         return jsonify(amenity.to_dict())
     return abort(404)
 
 
-@app_views.route('/amenities/<_id>', methods=['DELETE'],
+@app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
 def del_amenity_by_id(amenity_id=None):
-    """ Delete a amenities by id """
+    """ Delete an amenity by id """
     amenity = storage.get(Amenity, amenity_id)
     if amenity:
         storage.delete(amenity)
@@ -36,7 +35,7 @@ def del_amenity_by_id(amenity_id=None):
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def post_amenity():
-    """ Put a amenity """
+    """ Put an amenity """
     body = request.get_json(silent=True)
     if not body:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
@@ -49,8 +48,8 @@ def post_amenity():
     return make_response(jsonify(new_amenity.to_dict()), 201)
 
 
-@app_views.route('/amenities/\
-    <amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 methods=['PUT'], strict_slashes=False)
 def put_amenity_by_id(amenity_id=None):
     """ Put update amenity by id """
     body = request.get_json(silent=True)
