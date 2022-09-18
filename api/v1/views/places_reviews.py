@@ -21,8 +21,6 @@ def places_reviews(place_id):
         post = request.get_json()
         if post is None or type(post) != dict:
             return jsonify({'error': 'Not a JSON'}), 400
-        # elif post.get('place_id') is None:
-        #     abort(404)
         elif post.get('user_id') is None:
             return jsonify({'error': 'Missing user_id'}), 400
         elif post.get('text') is None:
