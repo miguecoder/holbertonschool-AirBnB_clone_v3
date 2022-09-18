@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Python script that give Status of API"""
 
+from os import getenv
 from models import storage
 from flask import Flask
 from api.v1.views import app_views
@@ -22,4 +23,6 @@ def page_404(e):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000', threaded=True)
+    HBNB_API_HOST = getenv('HBNB_API_HOST')
+    HBNB_API_PORT = getenv('HBNB_API_PORT')
+    app.run(host=HBNB_API_HOST, port=HBNB_API_PORT, threaded=True)
